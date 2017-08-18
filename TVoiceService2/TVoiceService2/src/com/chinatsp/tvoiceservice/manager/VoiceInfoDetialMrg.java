@@ -10,7 +10,7 @@ import com.google.gson.Gson;
  */
 public class VoiceInfoDetialMrg extends IVoiceMrgInterface {
 
-	public VoiceInfoDetialMrg(Context mContext, VoiceActionCallBack callBack) {
+	public VoiceInfoDetialMrg(Context mContext, IFlyVoiceController callBack) {
 		super(mContext, callBack);
 		// TODO Auto-generated constructor stub
 	}

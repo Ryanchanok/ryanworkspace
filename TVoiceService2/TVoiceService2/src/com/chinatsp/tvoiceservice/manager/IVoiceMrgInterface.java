@@ -10,12 +10,13 @@ import com.chinatsp.tvoiceservice.VoiceService.VoiceActionCallBack;
 
 public abstract class IVoiceMrgInterface {
 	protected Context mContext;
-	protected VoiceActionCallBack mActionCallBack;
+	protected IFlyVoiceController iFlyVoiceController;
+	protected static final String TAG = "IVoiceMrgInterface";
 
-	public IVoiceMrgInterface(Context mContext, VoiceActionCallBack callBack) {
+	public IVoiceMrgInterface(Context mContext, IFlyVoiceController flyVoicecontroller) {
 		super();
 		this.mContext = mContext;
-		mActionCallBack = callBack;
+		this.iFlyVoiceController = flyVoicecontroller;
 	}
 
 	abstract String execute(String jsonObj);
@@ -41,6 +42,7 @@ public abstract class IVoiceMrgInterface {
 		}
 		return resultJson.toString();
 	}
+
 
 	/**
 	 * 当execute时发生异常通知上层UI

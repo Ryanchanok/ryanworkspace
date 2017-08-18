@@ -18,6 +18,7 @@ import com.iflytek.adapter.ttsservice.ITtsClientListener;
 import com.iflytek.navi.NaviClientListener;
 import com.iflytek.platform.PlatformClientListener;
 import com.iflytek.platform.type.PlatformCode;
+import com.iflytek.platformservice.PlatformHelp;
 import com.iflytek.platformservice.PlatformService;
 import com.incall.proxy.can.CanManager.MIC;
 
@@ -50,21 +51,25 @@ public class IFlyVoiceController implements PlatformClientListener, NaviClientLi
 		this.mVActionCallBack = mVActionCallBack;
 		initActionsMrg();
 	}
+	public VoiceActionCallBack getVActionCallBack(){
+		return mVActionCallBack;
+	}
 
 	private void initActionsMrg() {
 		// TODO Auto-generated method stub
 		if (mCommandMap == null) {
 			mCommandMap = new HashMap<String, IVoiceMrgInterface>();
-			mCommandMap.put(VOICE_ACTION_MRG, new VoiceActionMrg(mContext, mVActionCallBack));
-			mCommandMap.put(VOICE_MUSIC_MRG, new VoiceMusicMrg(mContext, mVActionCallBack));
-			mCommandMap.put(VOICE_RADIO_MRG, new VoiceRadioMrg(mContext, mVActionCallBack));
-			mCommandMap.put(VOICE_MISC_MRG, new VoiceMiscMrg(mContext, mVActionCallBack));
-			mCommandMap.put(VOICE_AC_MRG, new VoiceACMrg(mContext, mVActionCallBack));
+			mCommandMap.put(VOICE_ACTION_MRG, new VoiceActionMrg(mContext, this));
+			mCommandMap.put(VOICE_MUSIC_MRG, new VoiceMusicMrg(mContext, this));
+			mCommandMap.put(VOICE_RADIO_MRG, new VoiceRadioMrg(mContext, this));
+			mCommandMap.put(VOICE_MISC_MRG, new VoiceMiscMrg(mContext, this));
+			mCommandMap.put(VOICE_AC_MRG, new VoiceACMrg(mContext, this));
+			mCommandMap.put(VOICE_AC_MRG, new VoiceCmdMrg(mContext, this));
 			mCommandMap.put(VOICE_INFO_DETAIL_MRG, new VoiceInfoDetialMrg(mContext,
-					mVActionCallBack));
+					this));
 			mCommandMap.put(VOICE_NAVIGATION_MRG,
-					new VoiceNavigationMrg(mContext, mVActionCallBack));
-			mCommandMap.put(VOICE_DEFAULT_MRG, new VoiceDefaultMrg(mContext, mVActionCallBack));
+					new VoiceNavigationMrg(mContext, this));
+			mCommandMap.put(VOICE_DEFAULT_MRG, new VoiceDefaultMrg(mContext, this));
 		}
 		if (audioManager == null) {
 			audioManager = (AudioManager) mContext.getSystemService(Context.AUDIO_SERVICE);
@@ -370,13 +375,13 @@ public class IFlyVoiceController implements PlatformClientListener, NaviClientLi
 	 */
 	public void AudioFocusChange(int focusChange) {
 		if (PlatformService.platformCallback == null) {
-			Log.e(TAG, "PlatformService.platformCallback == null");
+			Log.d(TAG, "PlatformService.platformCallback == null");
 			return;
 		}
 		try {
 			PlatformService.platformCallback.audioFocusChange(focusChange);
 		} catch (RemoteException e) {
-			Log.e(TAG, "platformCallback audioFocusChange error:" + e.getMessage());
+			Log.d(TAG, "platformCallback audioFocusChange error:" + e.getMessage());
 		}
 	}
 
@@ -388,14 +393,14 @@ public class IFlyVoiceController implements PlatformClientListener, NaviClientLi
 	 */
 	public void onSearchPlayListResult(int type, java.lang.String result) {
 		if (PlatformService.platformCallback == null) {
-			Log.e(TAG, "PlatformService.platformCallback == null");
+			Log.d(TAG, "PlatformService.platformCallback == null");
 			return;
 		}
-		// try {
-		// PlatformService.platformCallback.onSearchPlayListResult("", "");
-		// } catch (RemoteException e) {
-		// Log.e(TAG, "platformCallback get music error:" + e.getMessage());
-		// }
+		try {
+			PlatformService.platformCallback.onSearchPlayListResult(type, result);
+		} catch (RemoteException e) {
+			Log.d(TAG, "platformCallback get music error:" + e.getMessage());
+		}
 
 	}
 
@@ -407,7 +412,7 @@ public class IFlyVoiceController implements PlatformClientListener, NaviClientLi
 	 */
 	public void phoneStateChange(int state, String inComingNumber) {
 		if (PlatformService.platformCallback == null) {
-			Log.e(TAG, "PlatformService.platformCallback == null");
+			Log.d(TAG, "PlatformService.platformCallback == null");
 			return;
 		}
 		JSONObject actionJson = new JSONObject();

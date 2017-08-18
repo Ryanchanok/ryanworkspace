@@ -10,7 +10,7 @@ import com.google.gson.Gson;
  */
 public class VoiceMiscMrg extends IVoiceMrgInterface {
 
-	public VoiceMiscMrg(Context mContext, VoiceActionCallBack callBack) {
+	public VoiceMiscMrg(Context mContext, IFlyVoiceController callBack) {
 		super(mContext, callBack);
 		// TODO Auto-generated constructor stub
 	}
@@ -21,7 +21,7 @@ public class VoiceMiscMrg extends IVoiceMrgInterface {
 		Gson gson = new Gson();
 		MiscData miscData = gson.fromJson(jsonObj, MiscData.class);
 		if (miscData == null) {
-			buildResultStr(false, "json is null");
+			return buildResultStr(false, "json is null");
 		}
 		// do something
 		if ("app".equals(miscData.getFocus())) {
@@ -33,7 +33,7 @@ public class VoiceMiscMrg extends IVoiceMrgInterface {
 		} else {
 			return buildResultStr(false, "json parse error");
 		}
-		return buildResultStr(true, "success");
+		return buildResultStr(true, "");
 	}
 
 	public class MiscData {

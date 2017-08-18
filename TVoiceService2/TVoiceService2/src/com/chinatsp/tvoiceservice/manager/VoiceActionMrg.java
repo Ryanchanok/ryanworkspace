@@ -5,7 +5,6 @@ import android.util.Log;
 
 import com.chinatsp.tvoiceservice.VoiceService.VoiceActionCallBack;
 import com.google.gson.Gson;
-import com.iflytek.autofly.audioservice.util.AudioServiceCons;
 
 /**
  * 数据类型包括：执行操作Action
@@ -16,10 +15,10 @@ import com.iflytek.autofly.audioservice.util.AudioServiceCons;
 public class VoiceActionMrg extends IVoiceMrgInterface {
 	private int currentMicType = -1;
 
-	public VoiceActionMrg(Context mContext, VoiceActionCallBack callBack) {
-		super(mContext, callBack);
-		// TODO Auto-generated constructor stub
+	public VoiceActionMrg(Context mContext, IFlyVoiceController flyVoicecontroller) {
+		super(mContext, flyVoicecontroller);
 	}
+
 
 	@Override
 	String execute(String jsonObj) {
@@ -30,9 +29,9 @@ public class VoiceActionMrg extends IVoiceMrgInterface {
 			buildResultStr(false, "json is null");
 		}
 		if (action.getAction().equals("call")) {
-			mActionCallBack.onBtPhoneCallNotify(action.getParam1());
+			iFlyVoiceController.getVActionCallBack().onBtPhoneCallNotify(action.getParam1());
 		} else if (action.getAction().equals("sendsms")) {
-			mActionCallBack.onBtPhoneMsgNotify(action.getParam1(), action.getParam2());
+			iFlyVoiceController.getVActionCallBack().onBtPhoneMsgNotify(action.getParam1(), action.getParam2());
 		} else if ("startwakerecord".equals(action.getAction())) {
 			changeDinoseMode(1);
 		} else if ("startspeechrecord".equals(action.getAction())) {
@@ -46,21 +45,21 @@ public class VoiceActionMrg extends IVoiceMrgInterface {
 	private void changeDinoseMode(int type) {
 		// TODO Auto-generated method stub
 
-		com.iflytek.autofly.audioservice.util.AudioManager mAudioManager = com.iflytek.autofly.audioservice.util.AudioManager
-				.registerListener(mContext, null);
-		if (type == 0) {
-			if (currentMicType != 0) {
-				mAudioManager.setMicMode(AudioServiceCons.MicMode.NOISE_REDUCTION);
-			}
-			currentMicType = 0;
-
-		} else {
-			if (currentMicType != 1) {
-				mAudioManager.setMicMode(AudioServiceCons.MicMode.WAKEUP);
-			}
-			currentMicType = 1;
-
-		}
+//		com.iflytek.autofly.audioservice.util.AudioManager mAudioManager = com.iflytek.autofly.audioservice.util.AudioManager
+//				.registerListener(mContext, null);
+//		if (type == 0) {
+//			if (currentMicType != 0) {
+//				mAudioManager.setMicMode(AudioServiceCons.MicMode.NOISE_REDUCTION);
+//			}
+//			currentMicType = 0;
+//
+//		} else {
+//			if (currentMicType != 1) {
+//				mAudioManager.setMicMode(AudioServiceCons.MicMode.WAKEUP);
+//			}
+//			currentMicType = 1;
+//
+//		}
 	}
 
 	public class Action {

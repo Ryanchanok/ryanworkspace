@@ -15,7 +15,7 @@ import com.incall.proxy.constant.VoiceConstantsDef;
  */
 public class VoiceACMrg extends IVoiceMrgInterface {
 
-	public VoiceACMrg(Context mContext, VoiceActionCallBack callBack) {
+	public VoiceACMrg(Context mContext, IFlyVoiceController callBack) {
 		super(mContext, callBack);
 		// TODO Auto-generated constructor stub
 	}
@@ -29,20 +29,20 @@ public class VoiceACMrg extends IVoiceMrgInterface {
 			buildResultStr(false, "json is null");
 		}
 		if (acControlData.getOperation().equals("OPEN")) {
-			mActionCallBack.onAirPowerNotify(VoiceConstantsDef.AirPower.ON.index);
+			iFlyVoiceController.getVActionCallBack().onAirPowerNotify(VoiceConstantsDef.AirPower.ON.index);
 		} else if (acControlData.getOperation().equals("CLOSE")) {
-			mActionCallBack.onAirPowerNotify(VoiceConstantsDef.AirPower.OFF.index);
+			iFlyVoiceController.getVActionCallBack().onAirPowerNotify(VoiceConstantsDef.AirPower.OFF.index);
 		} else if (acControlData.getOperation().equals("SET")) {
 			if ("制冷".equals(acControlData.getMode())) {
-				mActionCallBack.onAirModeNotify(VoiceConstantsDef.AirMode.WIND_PEOPLE.index);
+				iFlyVoiceController.getVActionCallBack().onAirModeNotify(VoiceConstantsDef.AirMode.WIND_PEOPLE.index);
 			} else if ("制热".equals(acControlData.getMode())) {
-				mActionCallBack.onAirModeNotify(VoiceConstantsDef.AirMode.HEATING.index);
+				iFlyVoiceController.getVActionCallBack().onAirModeNotify(VoiceConstantsDef.AirMode.HEATING.index);
 			} else {
 				// do something
 				if ("+".equals(acControlData.getFan_speed())) {
-					mActionCallBack.onAirModeNotify(VoiceConstantsDef.AirMode.HEATING.index);
+					iFlyVoiceController.getVActionCallBack().onAirModeNotify(VoiceConstantsDef.AirMode.HEATING.index);
 				} else if ("自动风".equals(acControlData.getFan_speed())) {
-					mActionCallBack.onAirModeNotify(VoiceConstantsDef.AirMode.HEATING.index);
+					iFlyVoiceController.getVActionCallBack().onAirModeNotify(VoiceConstantsDef.AirMode.HEATING.index);
 				} else {
 
 				}

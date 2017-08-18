@@ -14,7 +14,7 @@ import com.incall.proxy.constant.VoiceConstantsDef;
  */
 public class VoiceRadioMrg extends IVoiceMrgInterface {
 
-	public VoiceRadioMrg(Context mContext, VoiceActionCallBack callBack) {
+	public VoiceRadioMrg(Context mContext, IFlyVoiceController callBack) {
 		super(mContext, callBack);
 		// TODO Auto-generated constructor stub
 	}
@@ -25,14 +25,25 @@ public class VoiceRadioMrg extends IVoiceMrgInterface {
 		Gson gson = new Gson();
 		RadioData radioData = gson.fromJson(jsonObj, RadioData.class);
 		if (radioData == null) {
-			buildResultStr(false, "json is null");
+			return buildResultStr(false, "Json 出错");
 		}
-		mActionCallBack.onRadioNotify(Integer.parseInt(radioData.getCode()),
-				VoiceConstantsDef.RadioBand.FM.index, radioData.getName(),
-				Integer.parseInt(radioData.getCategory()), "", radioData.getLocation(),
-				radioData.getLocation());
-		// do something
-		return buildResultStr(true, "success");
+//		iFlyVoiceController.getVActionCallBack().onRadioNotify(Integer.parseInt(radioData.getCode()),
+//				VoiceConstantsDef.RadioBand.FM.ordinal(), radioData.getName(),
+//				Integer.parseInt(radioData.getCategory()), "", radioData.getLocation(),
+//				radioData.getLocation());
+		//通知语音助理搜索结果，需回调。
+		String result =  "{\"focus\":\"music\",\"status\":\"success\",\"result\":[{\"song\":\"忘情水\",\"artist\":\"刘德华\"},"
+				+ "{\"song\":\"恭喜发财\",\"artist\":\"刘德华\"},"
+				+ "{\"song\":\"billie jean\",\"artist\":\"迈克杰克逊\",\"category\":\"摇滚\"},"
+				+ "{\"song\":\"beat it\",\"artist\":\"迈克杰克逊\",\"category\":\"摇滚\"},"
+				+ "{\"song\":\"we are the world\",\"artist\":\"迈克杰克逊\",\"category\":\"摇滚\"},"
+				+ "{\"song\":\"beat it\",\"artist\":\"迈克杰克逊\",\"category\":\"摇滚\"},"
+				+ "{\"song\":\"双节棍\",\"artist\":\"周杰伦\",\"album\":\"Jay\"},"
+				+ "{\"song\":\"青花瓷\",\"artist\":\"周杰伦\"},"
+				+ "{\"song\":\"斗牛\",\"artist\":\"周杰伦\"},"
+				+ "{\"song\":\"七里香\",\"artist\":\"周杰伦\"}" + "]}";
+        iFlyVoiceController.onSearchPlayListResult(1, result);
+		return buildResultStr(true, "");
 	}
 
 	public class RadioData {
@@ -99,6 +110,7 @@ public class VoiceRadioMrg extends IVoiceMrgInterface {
 		public void setLocation(String location) {
 			this.location = location;
 		}
+
 
 	}
 }

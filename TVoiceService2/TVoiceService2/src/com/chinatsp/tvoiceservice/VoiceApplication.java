@@ -14,7 +14,7 @@ public class VoiceApplication extends Application{
 		// TODO Auto-generated method stub
 		super.onCreate();
 		PlatformHelp.getInstance().setPlatformClient(new IFlyPlatformAdapterClient(this));
-//		NavigationHelp.getInstance().setNaviClient(new IFlyNaviClient());
+		NavigationHelp.getInstance().setNaviClient(new IFlyNaviClient());
 	}
 
 }

@@ -12,7 +12,7 @@ import com.google.gson.Gson;
  */
 public class VoiceNavigationMrg extends IVoiceMrgInterface {
 
-	public VoiceNavigationMrg(Context mContext, VoiceActionCallBack callBack) {
+	public VoiceNavigationMrg(Context mContext, IFlyVoiceController callBack) {
 		super(mContext, callBack);
 		// TODO Auto-generated constructor stub
 	}

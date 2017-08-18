@@ -6,7 +6,7 @@ import com.chinatsp.tvoiceservice.VoiceService.VoiceActionCallBack;
 
 public class VoiceDefaultMrg extends IVoiceMrgInterface{
 
-	public VoiceDefaultMrg(Context mContext, VoiceActionCallBack callBack) {
+	public VoiceDefaultMrg(Context mContext, IFlyVoiceController callBack) {
 		super(mContext, callBack);
 		// TODO Auto-generated constructor stub
 	}

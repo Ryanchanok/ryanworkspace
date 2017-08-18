@@ -14,7 +14,7 @@ import com.incall.proxy.constant.VoiceConstantsDef;
  */
 public class VoiceCmdMrg extends IVoiceMrgInterface {
 
-	public VoiceCmdMrg(Context mContext, VoiceActionCallBack callBack) {
+	public VoiceCmdMrg(Context mContext, IFlyVoiceController callBack) {
 		super(mContext, callBack);
 		// TODO Auto-generated constructor stub
 	}
@@ -32,17 +32,17 @@ public class VoiceCmdMrg extends IVoiceMrgInterface {
 
 		} else if ("播放模式".equals(cmdData.category)) {
 			if ("单曲循环".equals(cmdData.getName())) {
-				mActionCallBack.onRepeatNotify(VoiceConstantsDef.MusicRepeat.REPEAT_ONE.index);
+				iFlyVoiceController.getVActionCallBack().onRepeatNotify(VoiceConstantsDef.MusicRepeat.REPEAT_ONE.index);
 			} else if ("随机播放".equals(cmdData.getName())) {
-				mActionCallBack.onRepeatNotify(VoiceConstantsDef.MusicRepeat.SHUFFLE.index);
+				iFlyVoiceController.getVActionCallBack().onRepeatNotify(VoiceConstantsDef.MusicRepeat.SHUFFLE.index);
 			} else if ("全部循环".equals(cmdData.getName())) {
-				mActionCallBack.onCtrlNotify(VoiceConstantsDef.MusicRepeat.REPEAT_ALL.index);
+				iFlyVoiceController.getVActionCallBack().onCtrlNotify(VoiceConstantsDef.MusicRepeat.REPEAT_ALL.index);
 			}
 		} else if ("曲目控制".equals(cmdData.category)) {
 			if ("上一首".equals(cmdData.getName())) {
-				mActionCallBack.onCtrlNotify(VoiceConstantsDef.MusicCtrl.PREV.index);
+				iFlyVoiceController.getVActionCallBack().onCtrlNotify(VoiceConstantsDef.MusicCtrl.PREV.index);
 			} else if ("下一首".equals(cmdData.getName())) {
-				mActionCallBack.onCtrlNotify(VoiceConstantsDef.MusicCtrl.NEXT.index);
+				iFlyVoiceController.getVActionCallBack().onCtrlNotify(VoiceConstantsDef.MusicCtrl.NEXT.index);
 			}
 		} else if ("屏幕控制".equals(cmdData.category)) {
 
